@@ -38,20 +38,21 @@
 
     - name: Checkout a viable commit
       git:
-        repo: https://github.com/QuMuLab/COVI-AgentSim
+        repo: https://github.com/aubreymcleod/COVI-AgentSim
         dest: ~/COVI-AgentSim
-        version: 8a8b9b5aa5ac4c13dd7220d856119e3916148622
+        version: 8dcf23769a7a20e637e95148fe5264ef21572d0a
         force: yes
         
     - name: Version of covid19sim module should be commit hash
       lineinfile:
         path: ~/COVI-AgentSim/setup.py
         search_string: 'version'
-        line: version='8a8b9b5aa5ac4c13dd7220d856119e3916148622',
+        line: version='8dcf23769a7a20e637e95148fe5264ef21572d0a',
 
     - name: Install simulator 
       shell: /opt/conda/bin/conda run -n covisim pip install -e .
       args:
         chdir: ~/COVI-AgentSim
 
-
+    - name: Install JupyterNote
+      shell: /opt/conda/bin/conda run -n covisim conda install -c anaconda jupyter 
