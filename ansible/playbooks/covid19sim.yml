@@ -40,14 +40,14 @@
       git:
         repo: https://github.com/aubreymcleod/COVI-AgentSim
         dest: ~/COVI-AgentSim
-        version: 8dcf23769a7a20e637e95148fe5264ef21572d0a
+        version: 68c0b7ef4a3e41f41d20e6cd679b87fe3a38b6af
         force: yes
         
     - name: Version of covid19sim module should be commit hash
       lineinfile:
         path: ~/COVI-AgentSim/setup.py
         search_string: 'version'
-        line: version='8dcf23769a7a20e637e95148fe5264ef21572d0a',
+        line: version='68c0b7ef4a3e41f41d20e6cd679b87fe3a38b6af',
 
     - name: Install simulator 
       shell: /opt/conda/bin/conda run -n covisim pip install -e .
