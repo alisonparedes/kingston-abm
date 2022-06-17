@@ -1,10 +1,10 @@
-torch
-numpy
-addict
+torch==1.11.0
+numpy==1.22.4
+addict==2.4.0
 speedrun @ git+https://github.com/inferno-pytorch/speedrun.git
-zipfile36
-wandb
+zipfile36==0.1.3
+wandb==0.12.18
 onnx-tf @ git+https://github.com/onnx/onnx-tensorflow.git@c4fc047e7ec71daa6aa8f71e9cc2ee9e5a3768b6
-scipy
-pyzmq
-zarr
+scipy==1.8.1
+pyzmq==23.1.0
+zarr==2.11.3
