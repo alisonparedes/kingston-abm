@@ -15,7 +15,7 @@ RUN apt install python3 \
 # Ansible will run our startup commands
 # https://github.com/ansible/ansible/issues/68645
 
-RUN pip3 install ansible
+#RUN pip3 install ansible
 
 
 # Install Miniconda
@@ -45,5 +45,28 @@ RUN apt install git -y
 
 RUN mkdir /src
 
-CMD ansible-playbook -v --extra-vars "host=localhost" /src/ansible/playbooks/covid19sim.yml && sleep infinity
+#CMD ansible-playbook -v --extra-vars "host=localhost" /src/ansible/playbooks/covid19sim.yml && sleep infinity
 #CMD sleep infinity
+
+#replace ansible
+RUN /opt/conda/bin/conda create -n covisim python=3.8 -y
+
+#prep for CTT
+RUN cd ~/ && git clone https://github.com/mila-iqia/COVI-ML.git
+RUN cd ~/COVI-ML && git checkout 19986f7427a7a643eb05fb41e5ed4dd113362cd6       # update me as need be
+
+#patch ctt moduel
+RUN cd ~/ && git clone https://github.com/aubreymcleod/kingston-abm.git
+RUN cp ~/kingston-abm/resources/requirements.txt ~/COVI-ML/requirements.txt
+RUN cp ~/kingston-abm/resources/setup.py ~/COVI-ML/setup.py
+
+
+#install ctt
+RUN cd ~/COVI-ML && /opt/conda/bin/conda run -n covisim pip install -e .
+
+
+# install agent based model
+RUN cd ~/ && git clone https://github.com/aubreymcleod/COVI-AgentSim.git
+RUN cd ~/COVI-AgentSim && git checkout 68c0b7ef4a3e41f41d20e6cd679b87fe3a38b6af
+RUN cd ~/COVI-AgentSim && /opt/conda/bin/conda run -n covisim pip install -e .
+RUN /opt/conda/bin/conda run -n covisim conda install -c anaconda jupyter 
