@@ -56,7 +56,7 @@ RUN cd ~/ && git clone https://github.com/mila-iqia/COVI-ML.git
 RUN cd ~/COVI-ML && git checkout 19986f7427a7a643eb05fb41e5ed4dd113362cd6       # update me as need be
 
 #patch ctt moduel
-RUN cd ~/ && git clone https://github.com/aubreymcleod/kingston-abm.git
+RUN cd ~/ && git clone https://github.com/QuMuLab/kingston-abm.git
 RUN cp ~/kingston-abm/resources/requirements.txt ~/COVI-ML/requirements.txt
 RUN cp ~/kingston-abm/resources/setup.py ~/COVI-ML/setup.py
 
@@ -66,7 +66,7 @@ RUN cd ~/COVI-ML && /opt/conda/bin/conda run -n covisim pip install -e .
 
 
 # install agent based model
-RUN cd ~/ && git clone https://github.com/aubreymcleod/COVI-AgentSim.git
+RUN cd ~/ && git clone https://github.com/QuMuLab/COVI-AgentSim.git
 RUN cd ~/COVI-AgentSim && git checkout 68c0b7ef4a3e41f41d20e6cd679b87fe3a38b6af
 RUN cd ~/COVI-AgentSim && /opt/conda/bin/conda run -n covisim pip install -e .
 RUN /opt/conda/bin/conda run -n covisim conda install -c anaconda jupyter 

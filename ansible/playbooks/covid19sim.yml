@@ -38,9 +38,9 @@
 
     - name: Checkout a viable commit
       git:
-        repo: https://github.com/aubreymcleod/COVI-AgentSim
+        repo: https://github.com/QuMuLab/COVI-AgentSim
         dest: ~/COVI-AgentSim
-        version: 68c0b7ef4a3e41f41d20e6cd679b87fe3a38b6af
+        version: master
         force: yes
         
     - name: Version of covid19sim module should be commit hash
