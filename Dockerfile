@@ -47,8 +47,8 @@ RUN git clone https://github.com/QuMuLab/kingston-abm.git && \
 RUN cd COVI-ML && /opt/conda/bin/conda run -n covisim pip install -e .
 
 # install agent based model
-ADD https://api.github.com/repos/QuMuLab/COVI-AgentSim/git/refs/heads/ecal/map .covi-agentsim__ref
-RUN git clone -b "ecal/map" https://github.com/QuMuLab/COVI-AgentSim.git && \
+ADD https://api.github.com/repos/QuMuLab/COVI-AgentSim/git/refs/heads/real-map-data .covi-agentsim__ref
+RUN git clone -b real-map-data https://github.com/QuMuLab/COVI-AgentSim.git && \
     cd COVI-AgentSim && /opt/conda/bin/conda run -n covisim pip install -e .
 
 # install remaining dependencies
