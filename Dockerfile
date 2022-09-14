@@ -6,16 +6,7 @@ FROM ubuntu:20.04
 # Install Python 3
 
 RUN apt update 
-RUN apt install python3 \
-                python3-pip -y  # We will use pip3 to install Ansible
-
-
-# Install Ansible
-
-# Ansible will run our startup commands
-# https://github.com/ansible/ansible/issues/68645
-
-RUN pip3 install ansible
+RUN apt install python3 python3-pip -y
 
 
 # Install Miniconda
@@ -43,7 +34,22 @@ RUN apt install parallel -y
 RUN apt install git -y
 
 
-RUN mkdir /src
+RUN /opt/conda/bin/conda create -n covisim python=3.8 -y
 
-CMD ansible-playbook -v --extra-vars "host=localhost" /src/ansible/playbooks/covid19sim.yml && sleep infinity
-#CMD sleep infinity
+# Install CTT
+RUN git clone https://github.com/mila-iqia/COVI-ML.git && cd COVI-ML && git checkout 19986f7427a7a643eb05fb41e5ed4dd113362cd6
+
+# patch requirements/setup
+RUN git clone https://github.com/QuMuLab/kingston-abm.git && \
+    cp kingston-abm/resources/requirements.txt COVI-ML/requirements.txt && \
+    cp kingston-abm/resources/setup.py COVI-ML/setup.py
+
+RUN cd COVI-ML && /opt/conda/bin/conda run -n covisim pip install -e .
+
+# install agent based model
+ADD https://api.github.com/repos/QuMuLab/COVI-AgentSim/git/refs/heads/real-map-data .covi-agentsim__ref
+RUN git clone -b real-map-data https://github.com/QuMuLab/COVI-AgentSim.git && \
+    cd COVI-AgentSim && /opt/conda/bin/conda run -n covisim pip install -e .
+
+# install remaining dependencies
+RUN /opt/conda/bin/conda run -n covisim conda install -c anaconda jupyter 
